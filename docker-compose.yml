@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # =====================================================================
+  # Contenedor 1: Base de Datos de Staging (PostgreSQL 16)
+  # [C4 Nivel 2: Staging Database]
+  # =====================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: siae_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: siae_staging
+      POSTGRES_USER: vetanco_user
+      POSTGRES_PASSWORD: vetanco_secure_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # =====================================================================
+  # Contenedor 2: Backend API REST (FastAPI + SQLAlchemy)
+  # [C4 Nivel 2: Backend REST & Business Logic]
+  # =====================================================================
+  backend-api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: siae_backend_api
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql+psycopg://vetanco_user:vetanco_secure_password@postgres:5432/siae_staging
+      - VETANCO_CUIT=30623368939
+      - SAP_SOCIEDAD=AR01
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=gemini-2.5-flash
+      - MAIL_INGESTION_MODE=simulated
+    volumes:
+      - ./backend/data:/app/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+  # =====================================================================
+  # Contenedor 3: Worker de Ingesta & Scheduler (Python Worker)
+  # [C4 Nivel 2: Ingestor IMAP / Background Worker]
+  # =====================================================================
+  mail-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: siae_mail_worker
+    restart: unless-stopped
+    command: ["python", "-c", "import time; from app.modules.scheduler import iniciar_scheduler; iniciar_scheduler(); print('Worker en ejecución continua...'); time.sleep(99999999)"]
+    environment:
+      - DATABASE_URL=postgresql+psycopg://vetanco_user:vetanco_secure_password@postgres:5432/siae_staging
+      - VETANCO_CUIT=30623368939
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - ./backend/data:/app/data
+    depends_on:
+      - postgres
+      - backend-api
+
+  # =====================================================================
+  # Contenedor 4: Dashboard Web de Auditoría (React / Nginx)
+  # [C4 Nivel 2: Web Application UI/UX]
+  # =====================================================================
+  frontend-ui:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: siae_frontend_ui
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-api
+
+volumes:
+  postgres_data:

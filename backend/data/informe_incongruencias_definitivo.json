@@ -1,0 +1,564 @@
+[
+  {
+    "archivo": "Junio 2026\\CLARO FC 00357765.pdf",
+    "ground_truth": {
+      "proveedor": "TELMEX ARGENTINA S.A. (CLARO)",
+      "cuit_emisor": "33695098419",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 70,
+      "numero": 357765,
+      "fecha": "2026-05-06",
+      "cae": null,
+      "vto_cae": null,
+      "moneda": "ARS",
+      "total": 1246762.86,
+      "orden_compra": null,
+      "categoria": "Telecomunicaciones / Enlaces"
+    },
+    "programa": {
+      "id": "60663ac7-b9ab-42fd-9385-fc6fcb0d0258",
+      "cuit_emisor": "33695098419",
+      "razon_social": "Código N° 01",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 1,
+      "fecha_emision": "2026-10-31",
+      "cae": null,
+      "vencimiento_cae": null,
+      "total": 1246762.86,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "CAE_INVALIDO",
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='Código N° 01' vs Real='TELMEX ARGENTINA S.A. (CLARO)'",
+      "Punto de Venta: Programa=1 vs Real=70",
+      "Número de Comprobante: Programa=1 vs Real=357765"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\CLARO FC 0070A00362809.pdf",
+    "ground_truth": {
+      "proveedor": "TELMEX ARGENTINA S.A. (CLARO)",
+      "cuit_emisor": "33695098419",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 70,
+      "numero": 362809,
+      "fecha": "2026-06-04",
+      "cae": null,
+      "vto_cae": null,
+      "moneda": "ARS",
+      "total": 1292772.77,
+      "orden_compra": null,
+      "categoria": "Telecomunicaciones / Enlaces"
+    },
+    "programa": {},
+    "fallos": [
+      "DESCARTE TOTAL: Comprobante fiscal duplicado: ya se encuentra registrada la factura A 0001-00000001 del proveedor 'Código N° 01' (CUIT: 33695098419) en estado 'REQUIERE_AUDITORIA' (ID: 60663ac7)."
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\DATACLOUD FC 1646.pdf",
+    "ground_truth": {
+      "proveedor": "DATACLOUD S.A.",
+      "cuit_emisor": "30717164322",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 1646,
+      "fecha": "2026-05-05",
+      "cae": "86184226366859",
+      "vto_cae": "2026-05-15",
+      "moneda": "USD",
+      "total": 481.58,
+      "orden_compra": "CARTA DE ACEPTACION",
+      "categoria": "Servicios Cloud / Hosting"
+    },
+    "programa": {
+      "id": "17e0aaf4-2b18-4441-8bcf-696e770f270b",
+      "cuit_emisor": "30717164322",
+      "razon_social": "N° 0001-00001646",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 1646,
+      "fecha_emision": "2026-05-05",
+      "cae": null,
+      "vencimiento_cae": "2026-05-20",
+      "total": 1.0,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "CAE_INVALIDO",
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='N° 0001-00001646' vs Real='DATACLOUD S.A.'",
+      "Total facturado: Programa=1.0 vs Real=481.58 (USD)",
+      "CAE: Programa=None vs Real=86184226366859",
+      "Orden de Compra: Programa=None vs Real=CARTA DE ACEPTACION"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\EVEREST FC 1201.pdf",
+    "ground_truth": {
+      "proveedor": "EVEREST TECHNOLOGIES S.R.L.",
+      "cuit_emisor": "30710234929",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 12019,
+      "fecha": "2026-06-01",
+      "cae": "86227828347890",
+      "vto_cae": "2026-06-11",
+      "moneda": "ARS",
+      "total": 317621.37,
+      "orden_compra": null,
+      "categoria": "Mantenimiento InfoBroker"
+    },
+    "programa": {
+      "id": "e7794675-4321-4ada-917c-2b6875ec5f13",
+      "cuit_emisor": "30710234929",
+      "razon_social": "Nº 0001-00012019",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 12019,
+      "fecha_emision": "2026-06-01",
+      "cae": null,
+      "vencimiento_cae": null,
+      "total": 317621.37,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "CAE_INVALIDO",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='Nº 0001-00012019' vs Real='EVEREST TECHNOLOGIES S.R.L.'",
+      "CAE: Programa=None vs Real=86227828347890"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\FA-A 00002-00004640.pdf",
+    "ground_truth": {
+      "proveedor": "ARQUETIPONET S.R.L. (CUBE)",
+      "cuit_emisor": "30711751994",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 2,
+      "numero": 4640,
+      "fecha": "2026-06-01",
+      "cae": "86227908845546",
+      "vto_cae": "2026-06-11",
+      "moneda": "ARS",
+      "total": 405088.34,
+      "orden_compra": null,
+      "categoria": "Servicios Conectividad"
+    },
+    "programa": {
+      "id": "b0ce21db-4221-4e6c-9c60-5a02ea1afbfd",
+      "cuit_emisor": "30711751994",
+      "razon_social": "Arquetiponet S.R.L.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 2,
+      "numero_comprobante": 4640,
+      "fecha_emision": "2026-06-01",
+      "cae": "86227908845546",
+      "vencimiento_cae": "2026-07-01",
+      "total": 334783.75,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Total facturado: Programa=334783.75 vs Real=405088.34 (ARS)"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\FACTURA_N_0001-00001702 VETANCO.pdf",
+    "ground_truth": {
+      "proveedor": "DATACLOUD S.A.",
+      "cuit_emisor": "30717164322",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 1702,
+      "fecha": "2026-06-02",
+      "cae": "86228025448820",
+      "vto_cae": "2026-06-12",
+      "moneda": "USD",
+      "total": 481.58,
+      "orden_compra": "CARTA DE ACEPTACION",
+      "categoria": "Servicios Cloud / Hosting"
+    },
+    "programa": {},
+    "fallos": [
+      "DESCARTE TOTAL: Archivo descartado: cabecera corrupta o no es un PDF nativo"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\GS1_FC C-00007-00035061.pdf",
+    "ground_truth": {
+      "proveedor": "GS1 ARGENTINA",
+      "cuit_emisor": "30656017631",
+      "cuit_receptor": "30623368935",
+      "letra": "C",
+      "punto_venta": 7,
+      "numero": 35061,
+      "fecha": "2026-05-08",
+      "cae": "86194739867474",
+      "vto_cae": "2026-05-08",
+      "moneda": "ARS",
+      "total": 621500.0,
+      "orden_compra": null,
+      "categoria": "Códigos de Barra / GS1"
+    },
+    "programa": {
+      "id": "f40210d6-fa16-4a96-9e49-88792fe6758d",
+      "cuit_emisor": "30656017631",
+      "razon_social": "VETANCO S.A.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 7,
+      "numero_comprobante": 35061,
+      "fecha_emision": "2026-05-08",
+      "cae": "86194739867474",
+      "vencimiento_cae": "2026-05-08",
+      "total": 621500.0,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='VETANCO S.A.' vs Real='GS1 ARGENTINA'",
+      "Letra: Programa=A vs Real=C"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\NETLATIN FC 00018832.pdf",
+    "ground_truth": {
+      "proveedor": "NETLATIN S.R.L.",
+      "cuit_emisor": "30715868926",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 18832,
+      "fecha": "2026-06-01",
+      "cae": "86227279847261",
+      "vto_cae": "2026-06-11",
+      "moneda": "USD",
+      "total": 484.0,
+      "orden_compra": null,
+      "categoria": "Internet Industrial"
+    },
+    "programa": {
+      "id": "04cb54ca-6312-42b5-a24b-4eb0b4a41baf",
+      "cuit_emisor": "30715868926",
+      "razon_social": "Netlatin S.R.L.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 18832,
+      "fecha_emision": "2026-06-01",
+      "cae": "86227279847261",
+      "vencimiento_cae": null,
+      "total": 400.0,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Total facturado: Programa=400.0 vs Real=484.0 (USD)"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\No corrresponde\\Factura de Venta A N° 0003-00030403.pdf",
+    "ground_truth": {
+      "proveedor": "AUDITECOM SRL",
+      "cuit_emisor": "30715261142",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 3,
+      "numero": 30403,
+      "fecha": "2026-05-22",
+      "cae": "86216574958302",
+      "vto_cae": "2026-06-01",
+      "moneda": "ARS",
+      "total": 588857.39,
+      "orden_compra": null,
+      "categoria": "Auditoría Médica / Ocupacional"
+    },
+    "programa": {
+      "id": "66e521db-0005-42c2-a4fb-c90d17d858ee",
+      "cuit_emisor": "30715261142",
+      "razon_social": "VETANCO S A",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 3,
+      "numero_comprobante": 30403,
+      "fecha_emision": "2026-05-22",
+      "cae": "86216574958302",
+      "vencimiento_cae": "2026-06-01",
+      "total": 588857.39,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='VETANCO S A' vs Real='AUDITECOM SRL'"
+    ]
+  },
+  {
+    "archivo": "Junio 2026\\No corrresponde\\Factura de Venta A N° 0003-00030404.pdf",
+    "ground_truth": {
+      "proveedor": "AUDITECOM SRL",
+      "cuit_emisor": "30715261142",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 3,
+      "numero": 30404,
+      "fecha": "2026-05-22",
+      "cae": "86216575125525",
+      "vto_cae": "2026-06-01",
+      "moneda": "ARS",
+      "total": 588857.39,
+      "orden_compra": null,
+      "categoria": "Auditoría Médica / Ocupacional"
+    },
+    "programa": {
+      "id": "419562e5-485f-468a-bf24-c3f842e874cd",
+      "cuit_emisor": "30715261142",
+      "razon_social": "VETANCO S A",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 3,
+      "numero_comprobante": 30404,
+      "fecha_emision": "2026-05-22",
+      "cae": "86216575125525",
+      "vencimiento_cae": "2026-06-01",
+      "total": 588857.39,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='VETANCO S A' vs Real='AUDITECOM SRL'"
+    ]
+  },
+  {
+    "archivo": "Mayo\\Comprobante_01_0001_00018508.pdf",
+    "ground_truth": {
+      "proveedor": "NETLATIN S.R.L.",
+      "cuit_emisor": "30715868926",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 18508,
+      "fecha": "2026-05-01",
+      "cae": "86173144473443",
+      "vto_cae": "2026-05-11",
+      "moneda": "USD",
+      "total": 484.0,
+      "orden_compra": null,
+      "categoria": "Internet Industrial"
+    },
+    "programa": {
+      "id": "e0ac866e-d203-4b31-9bc3-7838974d6131",
+      "cuit_emisor": "30715868926",
+      "razon_social": "Netlatin S.R.L.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 18508,
+      "fecha_emision": "2026-05-01",
+      "cae": "86173144473443",
+      "vencimiento_cae": null,
+      "total": 400.0,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Total facturado: Programa=400.0 vs Real=484.0 (USD)"
+    ]
+  },
+  {
+    "archivo": "Mayo\\FA-A 00002-00004596.pdf",
+    "ground_truth": {
+      "proveedor": "ARQUETIPONET S.R.L. (CUBE)",
+      "cuit_emisor": "30711751994",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 2,
+      "numero": 4596,
+      "fecha": "2026-05-01",
+      "cae": "86183777003300",
+      "vto_cae": "2026-05-11",
+      "moneda": "ARS",
+      "total": 405088.34,
+      "orden_compra": null,
+      "categoria": "Servicios Conectividad"
+    },
+    "programa": {
+      "id": "8ef9e79d-5b5a-40c5-9b84-7fd8e8e184b2",
+      "cuit_emisor": "30711751994",
+      "razon_social": "Arquetiponet S.R.L.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 2,
+      "numero_comprobante": 4596,
+      "fecha_emision": "2026-05-01",
+      "cae": "86183777003300",
+      "vencimiento_cae": "2026-05-31",
+      "total": 334783.75,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Total facturado: Programa=334783.75 vs Real=405088.34 (ARS)"
+    ]
+  },
+  {
+    "archivo": "Mayo\\FACTURA 0001-00011917A.PDF",
+    "ground_truth": {
+      "proveedor": "EVEREST TECHNOLOGIES S.R.L.",
+      "cuit_emisor": "30710234929",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 1,
+      "numero": 11917,
+      "fecha": "2026-05-04",
+      "cae": "86184114205705",
+      "vto_cae": "2026-05-14",
+      "moneda": "ARS",
+      "total": 309572.45,
+      "orden_compra": null,
+      "categoria": "Mantenimiento InfoBroker"
+    },
+    "programa": {
+      "id": "3623b512-d86b-4761-ab96-b3d9e4a9ccd9",
+      "cuit_emisor": "30710234929",
+      "razon_social": "Nº 0001-00011917",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 1,
+      "numero_comprobante": 11917,
+      "fecha_emision": "2026-05-04",
+      "cae": null,
+      "vencimiento_cae": null,
+      "total": 309572.45,
+      "orden_compra": null,
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "CAE_INVALIDO",
+        "OC_NO_CONSIGNADA",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Proveedor: Programa='Nº 0001-00011917' vs Real='EVEREST TECHNOLOGIES S.R.L.'",
+      "CAE: Programa=None vs Real=86184114205705"
+    ]
+  },
+  {
+    "archivo": "Mayo\\Factura Electrónica 0006-00017606.PDF",
+    "ground_truth": {
+      "proveedor": "SEIDOR TECHNOLOGIES S.A.",
+      "cuit_emisor": "30707970428",
+      "cuit_receptor": "30623368935",
+      "letra": "A",
+      "punto_venta": 6,
+      "numero": 17606,
+      "fecha": "2026-05-04",
+      "cae": "86184101276589",
+      "vto_cae": "2026-05-14",
+      "moneda": "ARS",
+      "total": 442785.03,
+      "orden_compra": "4700092156",
+      "categoria": "Consultoría SAP"
+    },
+    "programa": {
+      "id": "63d7d1e6-b8db-40b6-a86b-1469701a37a0",
+      "cuit_emisor": "30707970428",
+      "razon_social": "SEIDOR TECHNOLOGIES S.A.",
+      "letra": "A",
+      "tipo_comprobante": "001",
+      "punto_venta": 6,
+      "numero_comprobante": 17606,
+      "fecha_emision": "2026-05-04",
+      "cae": null,
+      "vencimiento_cae": "2026-05-14",
+      "total": 365938.04,
+      "orden_compra": "4700092156",
+      "estado": "REQUIERE_AUDITORIA",
+      "alertas": [
+        "CAE_INVALIDO",
+        "DISCREPANCIA_SUMA_IMPOSITIVA",
+        "OC_INEXISTENTE",
+        "BAJA_CONFIANZA_GLOBAL",
+        "BAJA_CONFIANZA_CAMPO"
+      ]
+    },
+    "fallos": [
+      "Total facturado: Programa=365938.04 vs Real=442785.03 (ARS)",
+      "CAE: Programa=None vs Real=86184101276589"
+    ]
+  }
+]
