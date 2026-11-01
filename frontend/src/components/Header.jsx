@@ -1,12 +1,14 @@
 import React from 'react';
-import { RefreshCw, Upload, FileText, Database, ShieldCheck, Mail } from 'lucide-react';
+import { Upload, FileText, Database, ShieldCheck, Mail, LogOut, User } from 'lucide-react';
 
 export default function Header({
   onSincronizar,
   onSubirFactura,
   onImportarOC,
   onAbrirLotes,
-  loadingSync
+  loadingSync,
+  usuario,
+  onLogout
 }) {
   return (
     <header className="header-card">
@@ -25,7 +27,65 @@ export default function Header({
         </p>
       </div>
 
-      <div className="header-actions">
+      <div className="header-actions" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+        {/* Perfil del Usuario Activo & Cerrar Sesión */}
+        {usuario && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            background: 'rgba(255, 255, 255, 0.08)',
+            padding: '5px 12px 5px 6px',
+            borderRadius: '24px',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            marginRight: '6px'
+          }}>
+            <div style={{
+              width: '28px',
+              height: '28px',
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, #0284c7 0%, #1d4ed8 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 700,
+              fontSize: '11px',
+              color: '#ffffff'
+            }}>
+              FF
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
+              <span style={{ fontSize: '12px', fontWeight: 600, color: '#f8fafc' }}>
+                {usuario.nombre || 'Franco Ferreira'}
+              </span>
+              <span style={{ fontSize: '10.5px', color: '#94a3b8' }}>
+                {usuario.rol || 'Analista AP'}
+              </span>
+            </div>
+            <button
+              onClick={onLogout}
+              style={{
+                background: 'rgba(239, 68, 68, 0.2)',
+                border: '1px solid rgba(239, 68, 68, 0.4)',
+                color: '#fca5a5',
+                borderRadius: '6px',
+                padding: '4px 8px',
+                fontSize: '11px',
+                fontWeight: 600,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                marginLeft: '4px',
+                transition: 'all 0.2s'
+              }}
+              title="Cerrar sesión y volver al login"
+            >
+              <LogOut size={12} /> Salir
+            </button>
+          </div>
+        )}
+
         <button
           className="btn btn-secondary"
           onClick={onSincronizar}

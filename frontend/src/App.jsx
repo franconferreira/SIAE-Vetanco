@@ -6,6 +6,7 @@ import SplitViewAuditor from './components/SplitViewAuditor';
 import BatchCenterModal from './components/BatchCenterModal';
 import ImportOCModal from './components/ImportOCModal';
 import UploadInvoiceModal from './components/UploadInvoiceModal';
+import LoginScreen from './components/LoginScreen';
 
 import {
   fetchDashboardResumen,
@@ -15,6 +16,16 @@ import {
 } from './api';
 
 export default function App() {
+  // Estado de Autenticación
+  const [usuario, setUsuario] = useState(() => {
+    try {
+      const sesionGuardada = localStorage.getItem('siae_user_session');
+      return sesionGuardada ? JSON.parse(sesionGuardada) : null;
+    } catch {
+      return null;
+    }
+  });
+
   const [metrics, setMetrics] = useState(null);
   const [comprobantes, setComprobantes] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState('');
@@ -52,7 +63,7 @@ export default function App() {
     }
   };
 
-  // Heartbeat y Auto-Shutdown al cerrar el navegador
+  // Heartbeat y Auto-Shutdown al cerrar el navegador (activo siempre)
   useEffect(() => {
     const pingHeartbeat = () => {
       fetch('/api/system/heartbeat', { method: 'POST' }).catch(() => {});
@@ -75,9 +86,23 @@ export default function App() {
     };
   }, []);
 
+  // Cargar datos si el usuario está autenticado
   useEffect(() => {
-    cargarDatos();
-  }, [filtroEstado, busqueda]);
+    if (usuario) {
+      cargarDatos();
+    }
+  }, [usuario, filtroEstado, busqueda]);
+
+  const handleLoginSuccess = (datosSesion) => {
+    setUsuario(datosSesion);
+    mostrarToast(`Bienvenido al sistema, ${datosSesion.nombre}`, 'success');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('siae_user_session');
+    setUsuario(null);
+    mostrarToast('Sesión cerrada correctamente.', 'info');
+  };
 
   const handleSincronizar = async () => {
     setLoadingSync(true);
@@ -107,6 +132,32 @@ export default function App() {
     cargarDatos();
   };
 
+  // Si no hay usuario logueado, mostrar pantalla de Login
+  if (!usuario) {
+    return (
+      <>
+        {toast && (
+          <div style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            background: toast.tipo === 'error' ? '#991b1b' : (toast.tipo === 'success' ? '#166534' : '#1e293b'),
+            color: 'white',
+            padding: '12px 20px',
+            borderRadius: '8px',
+            boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+            fontSize: '13px',
+            fontWeight: 600,
+            zIndex: 2000
+          }}>
+            {toast.texto}
+          </div>
+        )}
+        <LoginScreen onLoginSuccess={handleLoginSuccess} />
+      </>
+    );
+  }
+
   return (
     <div className="app-container">
       {/* Toast Notificación */}
@@ -131,13 +182,15 @@ export default function App() {
         </div>
       )}
 
-      {/* Header Corporativo */}
+      {/* Header Corporativo con datos de usuario y botón Cerrar Sesión */}
       <Header
         onSincronizar={handleSincronizar}
         onSubirFactura={() => setMostrarSubirFactura(true)}
         onImportarOC={() => setMostrarImportarOC(true)}
         onAbrirLotes={() => setMostrarLotes(true)}
         loadingSync={loadingSync}
+        usuario={usuario}
+        onLogout={handleLogout}
       />
 
       {/* Métricas del Día (RF-19) */}
@@ -170,7 +223,7 @@ export default function App() {
         />
       )}
 
-      {/* Modal Importar Maestro de OCs SAP (Cierre Observación #12) */}
+      {/* Modal Importar Maestro de OCs SAP */}
       {mostrarImportarOC && (
         <ImportOCModal
           onClose={() => setMostrarImportarOC(false)}
