@@ -8,13 +8,23 @@ Write-Host "====================================================================
 $BaseDir = $PSScriptRoot
 Set-Location $BaseDir
 
-# 1. Backend
-Write-Host "`n[*] Verificando Backend..." -ForegroundColor Green
 $BackendDir = Join-Path $BaseDir "backend"
+$FrontendDir = Join-Path $BaseDir "frontend"
+$EnvFile = Join-Path $BackendDir ".env"
+$EnvExample = Join-Path $BackendDir ".env.example"
+
+# 0. Archivo .env
+if (-not (Test-Path $EnvFile) -and (Test-Path $EnvExample)) {
+    Write-Host "[*] Creando backend\.env a partir de .env.example..." -ForegroundColor Green
+    Copy-Item $EnvExample $EnvFile
+}
+
+# 1. Backend venv
+Write-Host "`n[*] Verificando Backend Python..." -ForegroundColor Green
 $VenvPython = Join-Path $BackendDir "venv\Scripts\python.exe"
 
 if (-not (Test-Path $VenvPython)) {
-    Write-Host "[!] Creando venv e instalando dependencias..." -ForegroundColor Yellow
+    Write-Host "[!] Creando venv e instalando dependencias Python..." -ForegroundColor Yellow
     Set-Location $BackendDir
     python -m venv venv
     .\venv\Scripts\pip install -r requirements.txt
@@ -23,19 +33,28 @@ if (-not (Test-Path $VenvPython)) {
 
 $DbPath = Join-Path $BackendDir "data\siae_staging.db"
 if (-not (Test-Path $DbPath)) {
-    Write-Host "[*] Inicializando base de datos y 6 facturas de prueba..." -ForegroundColor Yellow
+    Write-Host "[*] Inicializando base de datos y 6 facturas demo de prueba..." -ForegroundColor Yellow
     Start-Process -FilePath $VenvPython -ArgumentList "scripts\seed_demo.py" -WorkingDirectory $BackendDir -Wait
 }
 
-# 2. Iniciar Backend
+# 2. Frontend node_modules
+Write-Host "`n[*] Verificando dependencias de Frontend..." -ForegroundColor Green
+$NodeModules = Join-Path $FrontendDir "node_modules"
+if (-not (Test-Path $NodeModules)) {
+    Write-Host "[!] Ejecutando npm install por primera vez..." -ForegroundColor Yellow
+    Set-Location $FrontendDir
+    npm install
+    Set-Location $BaseDir
+}
+
+# 3. Iniciar Backend
 Write-Host "[*] Iniciando Backend FastAPI en http://127.0.0.1:8000..." -ForegroundColor Green
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$BackendDir'; .\venv\Scripts\uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload"
 
 Start-Sleep -Seconds 3
 
-# 3. Iniciar Frontend
+# 4. Iniciar Frontend
 Write-Host "[*] Iniciando Frontend React en http://localhost:5173..." -ForegroundColor Green
-$FrontendDir = Join-Path $BaseDir "frontend"
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$FrontendDir'; npm run dev"
 
 Start-Sleep -Seconds 2
