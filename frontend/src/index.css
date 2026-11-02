@@ -1,11 +1,11 @@
 :root {
-  --bg: #f3efe6;
+  --bg: #e6decb;
   --card-bg: #fbf8f1;
-  --card-border: #e2d9c8;
-  --card-border-strong: #c8bea8;
+  --card-border: #d8ceba;
+  --card-border-strong: #bfb39b;
   --text-main: #1e1b18;
   --text-secondary: #4a443d;
-  --text-muted: #7d7568;
+  --text-muted: #746c5f;
   
   --navy-dark: #12202c;
   --navy-mid: #1f3347;
@@ -29,8 +29,8 @@
   --blue-bg: #f1f5fa;
   --blue-border: #93c5fd;
 
-  --shadow-card: 0 4px 12px -2px rgba(40, 32, 20, 0.06), 0 2px 6px -2px rgba(40, 32, 20, 0.04);
-  --shadow-hover: 0 8px 20px -3px rgba(40, 32, 20, 0.1);
+  --shadow-card: 0 4px 14px -2px rgba(45, 35, 20, 0.08), 0 2px 6px -2px rgba(45, 35, 20, 0.05);
+  --shadow-hover: 0 8px 20px -3px rgba(40, 32, 20, 0.12);
   --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -67,14 +67,14 @@ input, select, textarea {
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #ebe5da;
+  background: #ded5c0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #c8bea8;
+  background: #bfb39b;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #9f947e;
+  background: #968a73;
 }
 
 /* Contenedor principal */
