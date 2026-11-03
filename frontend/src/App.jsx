@@ -12,6 +12,7 @@ import {
   fetchDashboardResumen,
   fetchComprobantes,
   fetchComprobanteDetalle,
+  eliminarComprobante,
   sincronizarCasillaMail
 } from './api';
 
@@ -132,6 +133,16 @@ export default function App() {
     cargarDatos();
   };
 
+  const handleEliminarComprobante = async (id, descripcion = '') => {
+    try {
+      await eliminarComprobante(id);
+      mostrarToast(`Comprobante ${descripcion} eliminado del sistema. Listo para volver a probarlo.`, 'success');
+      cargarDatos();
+    } catch (err) {
+      mostrarToast(`Error al eliminar comprobante: ${err.message}`, 'error');
+    }
+  };
+
   // Si no hay usuario logueado, mostrar pantalla de Login
   if (!usuario) {
     return (
@@ -204,6 +215,7 @@ export default function App() {
         busqueda={busqueda}
         setBusqueda={setBusqueda}
         onSeleccionarComprobante={handleSeleccionarComprobante}
+        onEliminarComprobante={handleEliminarComprobante}
       />
 
       {/* Split-View Auditor Modal (RF-20, RF-21, RF-22, RF-23) */}

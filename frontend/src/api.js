@@ -24,6 +24,17 @@ export async function fetchComprobanteDetalle(id) {
   return res.json();
 }
 
+export async function eliminarComprobante(id) {
+  const res = await fetch(`${API_BASE}/comprobantes/${id}`, {
+    method: 'DELETE'
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || 'Error al eliminar comprobante');
+  }
+  return res.json();
+}
+
 export function getComprobantePdfUrl(id, descargar = false) {
   return `${API_BASE}/comprobantes/${id}/pdf${descargar ? '?descargar=true' : ''}`;
 }

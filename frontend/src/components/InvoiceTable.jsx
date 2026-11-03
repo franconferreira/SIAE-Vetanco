@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Eye, AlertCircle, FileCheck, Check, Clock, XCircle, FileSpreadsheet } from 'lucide-react';
+import { Search, Eye, AlertCircle, FileCheck, Check, Clock, XCircle, FileSpreadsheet, X } from 'lucide-react';
 
 export default function InvoiceTable({
   comprobantes,
@@ -7,7 +7,8 @@ export default function InvoiceTable({
   setFiltroEstado,
   busqueda,
   setBusqueda,
-  onSeleccionarComprobante
+  onSeleccionarComprobante,
+  onEliminarComprobante
 }) {
   const getBadgeClass = (estado) => {
     switch (estado) {
@@ -196,14 +197,50 @@ export default function InvoiceTable({
                     </td>
 
                     <td style={{ textAlign: 'right' }}>
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => onSeleccionarComprobante(c.id)}
-                        style={{ padding: '6px 12px', fontSize: '12px' }}
-                      >
-                        <Eye size={14} />
-                        Auditar Split-View
-                      </button>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => onSeleccionarComprobante(c.id)}
+                          style={{ padding: '6px 12px', fontSize: '12px' }}
+                        >
+                          <Eye size={14} />
+                          Auditar Split-View
+                        </button>
+                        {onEliminarComprobante && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const desc = `${c.letra} ${String(c.punto_venta).padStart(4, '0')}-${String(c.numero_comprobante).padStart(8, '0')} (${c.razon_social_emisor})`;
+                              if (window.confirm(`¿Deseas eliminar la factura ${desc} de la lista para volver a probarla?`)) {
+                                onEliminarComprobante(c.id, desc);
+                              }
+                            }}
+                            style={{
+                              background: '#fee2e2',
+                              border: '1px solid #fecaca',
+                              color: '#dc2626',
+                              borderRadius: '6px',
+                              padding: '6px 8px',
+                              cursor: 'pointer',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              transition: 'all 0.15s ease'
+                            }}
+                            title="Eliminar factura de la lista para volver a probarla"
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = '#fecaca';
+                              e.currentTarget.style.color = '#b91c1c';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = '#fee2e2';
+                              e.currentTarget.style.color = '#dc2626';
+                            }}
+                          >
+                            <X size={15} />
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );

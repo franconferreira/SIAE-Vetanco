@@ -264,6 +264,29 @@ def obtener_comprobante(comprobante_id: str, db: Session = Depends(get_db)):
     return comp
 
 
+@app.delete("/api/comprobantes/{comprobante_id}")
+def eliminar_comprobante(comprobante_id: str, db: Session = Depends(get_db)):
+    """
+    [Demostración y Limpieza]
+    Elimina un comprobante de la base de datos de Staging junto con sus ítems y logs.
+    Permite remover facturas ya analizadas para volver a probarlas en presentaciones.
+    """
+    comp = db.query(Comprobante).filter(Comprobante.id == comprobante_id).first()
+    if not comp:
+        raise HTTPException(status_code=404, detail="Comprobante no encontrado")
+
+    # Intentar eliminar el archivo PDF físico asociado si existe
+    try:
+        if comp.archivo_pdf_path and os.path.exists(comp.archivo_pdf_path):
+            os.remove(comp.archivo_pdf_path)
+    except Exception as e:
+        logger.warning(f"No se pudo eliminar el archivo PDF físico {comp.archivo_pdf_path}: {e}")
+
+    db.delete(comp)
+    db.commit()
+    return {"ok": True, "mensaje": f"Comprobante {comprobante_id} eliminado exitosamente"}
+
+
 # =====================================================================
 # 3. Visor de PDF para Split-View (RF-20, RNF-04)
 # =====================================================================

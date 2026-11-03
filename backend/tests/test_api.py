@@ -145,3 +145,22 @@ def test_api_ordenes_compra_y_proveedores():
     res_provs = client.get("/api/proveedores")
     assert res_provs.status_code == 200
     assert len(res_provs.json()) == 20
+
+
+def test_api_eliminar_comprobante():
+    # 1. Crear o tomar un comprobante para eliminar
+    res_list = client.get("/api/comprobantes")
+    assert res_list.status_code == 200
+    comprobantes = res_list.json()
+    assert len(comprobantes) > 0
+
+    target_id = comprobantes[-1]["id"]
+
+    # 2. Eliminarlo vía DELETE
+    res_del = client.delete(f"/api/comprobantes/{target_id}")
+    assert res_del.status_code == 200
+    assert res_del.json()["ok"] is True
+
+    # 3. Verificar que ya no existe (404)
+    res_get = client.get(f"/api/comprobantes/{target_id}")
+    assert res_get.status_code == 404
