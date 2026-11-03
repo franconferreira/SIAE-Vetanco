@@ -89,7 +89,7 @@ def construir_prompt_fiscal(proveedor_plantilla: Optional[Dict[str, Any]] = None
         "2. CUIT receptor: Debe ser el de Vetanco S.A. (30623368939) si está dirigido a la empresa.\n"
         "3. Tipo comprobante: Código AFIP de 3 dígitos (001 para Factura A, 006 para Factura B, 002/003 Nota Débito/Crédito A).\n"
         "4. Fechas: Formato AAAA-MM-DD estricto.\n"
-        "5. Orden de Compra (OC): Buscar referencias como 'OC', 'Orden de Compra', 'Pedido', 'Ref. Cliente', '45000xxxxx'.\n"
+        "5. Orden de Compra (OC): Buscar referencias como 'OC', 'Orden de Compra', 'Pedido', 'Ref. Cliente', '45000xxxxx'. Si la factura corresponde a un servicio o gasto directo sin OC, dejá el campo como null sin penalizar la confianza.\n"
         "6. Consistencia impositiva: Total = Neto gravado + IVAs + No gravado + Exento + Percepciones. No inventes números.\n"
         "7. Nivel de confianza: Asigná un score entre 0.0 y 1.0 por cada campo extraído y globalmente.\n"
     )
@@ -492,7 +492,7 @@ def extraer_factura_local_fallback(pdf_path: str, texto_pdf: str) -> FacturaExtr
     conf_cuit = 0.99 if cuit_emisor else 0.60
     conf_total = 0.99 if total > 0 else 0.50
     conf_cae = 0.98 if cae else 0.70
-    conf_oc = 0.96 if orden_compra else 0.75
+    conf_oc = 0.96 if orden_compra else 0.98  # Ausencia de OC en servicios/gastos directos no penaliza certidumbre
     conf_iibb = 0.78 if (percep_iibb > 0 and "REVISIÓN" in texto_pdf.upper()) else (0.95 if percep_iibb > 0 else 0.99)
 
     conf_global = round((conf_cuit + conf_total + conf_cae + conf_oc + conf_iibb) / 5.0, 3)

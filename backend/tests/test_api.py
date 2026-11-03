@@ -8,6 +8,24 @@ from app.models import Comprobante, EstadoComprobante, AuditoriaLog
 client = TestClient(app)
 
 
+@pytest.fixture(autouse=True)
+def ensure_audit_comprobante():
+    db = SessionLocal()
+    audit_exists = db.query(Comprobante).filter(Comprobante.estado == EstadoComprobante.REQUIERE_AUDITORIA).first()
+    if not audit_exists:
+        comp = db.query(Comprobante).filter(Comprobante.estado != EstadoComprobante.RECHAZADA).first()
+        if comp:
+            comp.estado = EstadoComprobante.REQUIERE_AUDITORIA
+            comp.alertas_validacion = [{
+                "codigo": "DISCREPANCIA_SUMA_IMPOSITIVA",
+                "campo": "total",
+                "mensaje": "Discrepancia en suma impositiva",
+                "severidad": "error"
+            }]
+            db.commit()
+    db.close()
+
+
 def test_api_dashboard_resumen():
     response = client.get("/api/dashboard/resumen")
     assert response.status_code == 200
@@ -86,6 +104,20 @@ def test_api_aprobacion_1click_con_audit_trail():
 
 
 def test_api_generar_y_listar_batch():
+    # Asegurar al menos una factura lista para consolidar en el lote
+    db = SessionLocal()
+    comp_listo = db.query(Comprobante).filter(
+        Comprobante.estado.in_([EstadoComprobante.PROCESADA_LISTA_BATCH, EstadoComprobante.APROBADA_POR_USUARIO]),
+        Comprobante.lote_batch_id.is_(None)
+    ).first()
+    if not comp_listo:
+        comp_candidate = db.query(Comprobante).filter(Comprobante.estado != EstadoComprobante.RECHAZADA).first()
+        if comp_candidate:
+            comp_candidate.estado = EstadoComprobante.PROCESADA_LISTA_BATCH
+            comp_candidate.lote_batch_id = None
+            db.commit()
+    db.close()
+
     # Generar Lote Batch
     res_gen = client.post("/api/batch/generar")
     assert res_gen.status_code == 200

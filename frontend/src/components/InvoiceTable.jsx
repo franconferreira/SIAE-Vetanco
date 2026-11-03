@@ -141,7 +141,9 @@ export default function InvoiceTable({
                           {c.orden_compra_nro}
                         </span>
                       ) : (
-                        <span style={{ fontSize: '11px', color: '#94a3b8' }}>Sin OC</span>
+                        <span style={{ fontSize: '11px', color: '#64748b', fontStyle: 'italic' }}>
+                          Sin OC (Servicios/Directo)
+                        </span>
                       )}
                     </td>
 

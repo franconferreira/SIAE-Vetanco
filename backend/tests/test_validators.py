@@ -159,6 +159,17 @@ def test_rf16_conciliacion_orden_compra(db_session):
     ok_cant, _, alertas_cant = conciliar_orden_compra(db_session, "4500098124", "30708912345", items_exceso_cant)
     assert any(a["codigo"] == "CANTIDAD_SUPERA_SALDO_OC" for a in alertas_cant)
 
+    # Caso Factura de Servicios / Gastos Directos (sin Orden de Compra):
+    # La ausencia de OC no debe generar alerta ni rechazo
+    ok_sin_oc, oc_none, alertas_sin_oc = conciliar_orden_compra(db_session, None, "30708912345", items_ok)
+    assert ok_sin_oc is True
+    assert oc_none is None
+    assert len(alertas_sin_oc) == 0
+
+    ok_vacio, _, alertas_vacio = conciliar_orden_compra(db_session, "  ", "30708912345", items_ok)
+    assert ok_vacio is True
+    assert len(alertas_vacio) == 0
+
 
 def test_rf18_maquina_estados_integral(db_session):
     cabecera_ok = {
@@ -223,3 +234,16 @@ def test_rf18_maquina_estados_integral(db_session):
         items_ok
     )
     assert res_rechazo["estado"] == EstadoComprobante.RECHAZADA
+
+    # 4. Caso Factura de Servicios sin OC -> PROCESADA_LISTA_BATCH (STP 100%)
+    cabecera_servicios = dict(cabecera_ok, orden_compra=None, orden_compra_nro=None)
+    res_servicios = evaluar_comprobante_integral(
+        db_session,
+        cabecera_servicios,
+        subtotales_ok,
+        items_ok,
+        confianza_global=0.98,
+        confianza_campos={"cuit_emisor": 0.99, "importe_total": 0.99, "orden_compra": 0.80}
+    )
+    assert res_servicios["estado"] == EstadoComprobante.PROCESADA_LISTA_BATCH
+    assert len(res_servicios["alertas"]) == 0

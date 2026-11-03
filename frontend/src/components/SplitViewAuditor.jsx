@@ -306,9 +306,12 @@ export default function SplitViewAuditor({ comprobante, onClose, onActualizado }
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '4px' }}>Orden de Compra</label>
+                  <label style={{ display: 'block', fontWeight: 700, marginBottom: '4px' }}>
+                    Orden de Compra <span style={{ fontWeight: 400, color: 'var(--text-muted)' }}>(opcional)</span>
+                  </label>
                   <input
                     type="text"
+                    placeholder="S/ OC (Servicio / Gasto Directo)"
                     value={formData.orden_compra_nro}
                     onChange={(e) => handleInputChange('orden_compra_nro', e.target.value)}
                     className={camposObservados.has('orden_compra_nro') ? 'input-warning' : ''}

@@ -191,20 +191,19 @@ def conciliar_orden_compra(
 ) -> Tuple[bool, Optional[OrdenCompra], List[Dict[str, Any]]]:
     """
     [RF-16] 3-Way Matching preliminar contra Órdenes de Compra en Staging:
-    1. Verifica que la OC exista y esté en estado ABIERTA.
-    2. Cruza proveedor de la OC con el CUIT de la factura.
-    3. Verifica que el precio unitario facturado no exceda el precio pactado en la OC.
-    4. Verifica que la cantidad facturada no supere el saldo remanente de la OC.
+    1. Si no se especifica Orden de Compra (ej. facturas de servicios, suministros o
+       gastos directos donde no existe remito ni recepción física en almacén),
+       se omite el 3-way matching y se considera conciliación limpia (sin discrepancias).
+    2. Si se especifica Orden de Compra:
+       a. Verifica que la OC exista y esté en estado ABIERTA en Staging.
+       b. Cruza proveedor de la OC con el CUIT de la factura.
+       c. Verifica que el precio unitario facturado no exceda el precio pactado en la OC.
+       d. Verifica que la cantidad facturada no supere el saldo remanente de la OC.
     """
     alertas = []
-    if not orden_compra_nro:
-        alertas.append({
-            "codigo": "OC_NO_CONSIGNADA",
-            "campo": "orden_compra_nro",
-            "mensaje": "La factura no especifica número de Orden de Compra",
-            "severidad": "warning"
-        })
-        return False, None, alertas
+    if not orden_compra_nro or not str(orden_compra_nro).strip():
+        # Factura de servicio / gasto directo sin requerimiento de Orden de Compra física
+        return True, None, []
 
     oc_nro = str(orden_compra_nro).strip()
     oc = db.query(OrdenCompra).filter(OrdenCompra.numero_oc == oc_nro).first()
@@ -430,6 +429,9 @@ def evaluar_comprobante_integral(
         })
 
     for campo, score in confianza_campos.items():
+        if campo == "orden_compra" and not oc_nro:
+            # En comprobantes de servicios o gastos directos sin OC, la no detección de OC es esperada
+            continue
         if score < umbral:
             todas_las_alertas.append({
                 "codigo": "BAJA_CONFIANZA_CAMPO",
